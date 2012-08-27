@@ -23,14 +23,18 @@
 
 class Mgt_AmazingWysiwyg_Block_Adminhtml_Catalog_Helper_Form_Wysiwyg extends Mage_Adminhtml_Block_Catalog_Helper_Form_Wysiwyg
 {
+    public function getElementHtml()
+    {
+        if ($this->getIsWysiwygEnabled()) {
+            $class = $this->getClass();
+            $this->setClass($class. ' amazing-wysiwyg');
+        }
+        return parent::getElementHtml();
+    }
+    
     public function getAfterElementHtml()
     {
-    	$class = $this->getClass();
-    	$this->setClass($class. ' amazing-wysiwyg');
         $html = $this->getData('after_element_html');
-       
-        //$html = parent::getAfterElementHtml();
-        
         return $html;
     }
 }

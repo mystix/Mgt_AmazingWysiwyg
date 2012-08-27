@@ -10,6 +10,9 @@
             <mgt_amazing_wysiwyg>
                 <class>Mgt_AmazingWysiwyg_Block</class>
             </mgt_amazing_wysiwyg>
+            <mgt_amazing_wysiwyg_adminhtml>
+                <class>Mgt_AmazingWysiwyg_Block_Adminhtml</class>
+            </mgt_amazing_wysiwyg_adminhtml>
             <adminhtml>
               <rewrite>
                   <catalog_helper_form_wysiwyg>Mgt_AmazingWysiwyg_Block_Adminhtml_Catalog_Helper_Form_Wysiwyg</catalog_helper_form_wysiwyg>
@@ -28,18 +31,16 @@
         </helpers>
     </global>
     <adminhtml>
-        <!--
         <events>
-            <sales_order_shipment_save_after>
+            <core_block_abstract_to_html_after>
                 <observers>
-                    <mgt_observer_x>
-                        <class>mgt_x/observer</class>
-                        <method>addFunctionXt</method>
-                    </mgt_observer_x>
+                    <mgt_amazing_wysiwyg_add_js>
+                        <class>mgt_amazing_wysiwyg/observer</class>
+                        <method>addJs</method>
+                    </mgt_amazing_wysiwyg_add_js>
                  </observers>
-            </sales_order_shipment_save_after>
+            </core_block_abstract_to_html_after>
         </events>
-        -->
         <acl>
             <resources>
                 <all>
@@ -71,16 +72,14 @@
         </layout>  
     </adminhtml>
     <admin>
-        <!--
-        <routers>
+      <routers>
             <adminhtml>
                 <args>
                     <modules>
-                        <Mgt_AmazingWysiwyg before="Mage_Adminhtml">Mgt_X_Adminhtml</Mgt_AmazingWysiwyg>
+                        <Mgt_AmazingWysiwyg before="Mage_Adminhtml">Mgt_AmazingWysiwyg_Adminhtml</Mgt_AmazingWysiwyg>
                     </modules>
                 </args>
             </adminhtml>
         </routers>
-        --> 
     </admin>
 </config>

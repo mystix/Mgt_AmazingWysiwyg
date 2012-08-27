@@ -23,5 +23,14 @@
 
 class Mgt_AmazingWysiwyg_Model_Observer 
 {
-
+    public function addJs(Varien_Event_Observer $observer)
+    {
+        $block = $observer->getEvent()->getBlock();
+        if ($block && $block instanceof Mage_Adminhtml_Block_Page_Head) {
+            $transport = $observer->getEvent()->getTransport();
+            $transportHtml = $transport->getHtml();
+            $transportHtml .= $block->getLayout()->createBlock('mgt_amazing_wysiwyg_adminhtml/js')->setTemplate('mgt_amazing_wysiwyg/js.phtml')->toHtml();
+            $transport->setHtml($transportHtml);
+        }
+    }
 }
