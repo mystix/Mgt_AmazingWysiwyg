@@ -1,26 +1,13 @@
 <?xml version="1.0"?>
 <layout>
-  <!--
-  <adminhtml_catalog_product_edit>
+  <default>
     <reference name="head">
-      <action method="addItem"><type>skin_css</type><name>mgt_serp_editor/css/style.css</name></action>
-      <action method="addItem"><type>skin_js</type><name>mgt_serp_editor/js/functions.js</name><params/></action>
+      <!--<action method="addJs"><script>aquery/aquery.js</script></action>-->
+      <action method="addItem"><type>skin_css</type><name>mgt_amazing_wysiwyg/css/redactor/redactor.css</name></action>
+      <action method="addItem"><type>skin_js</type><name>mgt_amazing_wysiwyg/js/redactor/jquery-1.7.min.js</name><params/></action> 
+      <action method="addItem"><type>skin_js</type><name>mgt_amazing_wysiwyg/js/redactor/redactor.js</name><params/></action>
+      <!--<action method="addItem"><type>skin_js</type><name>mgt_amazing_wysiwyg/js/redactor/redactor.min.js</name><params/></action>-->
+      <action method="addItem"><type>skin_js</type><name>mgt_amazing_wysiwyg/js/mgt_amazing_wysiwyg.js</name><params/></action>
     </reference>
-  </adminhtml_catalog_product_edit>
-  --> 
-    <!--
-    <adminhtml_stock_editor>
-        <reference name="content">
-            <block type="wee_stockmanagement/adminhtml_stock_editor" name="stock.editor" />
-        </reference>
-    </adminhtml_stock_editor>
-
-    <adminhtml_stock_upload>
-        <reference name="content">
-            <block type="wee_stockmanagement/adminhtml_stock_upload" name="stock.upload" template="wee_stockmanagement/stock/upload.phtml">
-                <block type="wee_stockmanagement/adminhtml_stock_upload_widget_form_container" name="stock.upload.form.container"/>
-            </block>
-        </reference>
-    </adminhtml_stock_upload>
-    -->
+  </default>
 </layout>

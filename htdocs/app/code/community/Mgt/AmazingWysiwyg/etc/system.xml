@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <config>
     <tabs>
-        <mgt-commerce translate="label" module="mgt_x">
+        <mgt-commerce translate="label" module="mgt_amazing_wysiwyg">
             <label>Mgt-Commerce.com</label>
             <sort_order>105</sort_order>
         </mgt-commerce>
     </tabs>
     <sections>
-        <mgt_amazing_wysiwyg translate="label" module="mgt_x">
+        <mgt_amazing_wysiwyg translate="label" module="mgt_amazing_wysiwyg">
             <label>Amazing WYSIWYG Editor</label>
             <tab>mgt-commerce</tab>
             <frontend_type>text</frontend_type>

@@ -10,6 +10,11 @@
             <mgt_amazing_wysiwyg>
                 <class>Mgt_AmazingWysiwyg_Block</class>
             </mgt_amazing_wysiwyg>
+            <adminhtml>
+              <rewrite>
+                  <catalog_helper_form_wysiwyg>Mgt_AmazingWysiwyg_Block_Adminhtml_Catalog_Helper_Form_Wysiwyg</catalog_helper_form_wysiwyg>
+              </rewrite>
+            </adminhtml>
         </blocks>
         <models>
             <mgt_amazing_wysiwyg>

@@ -1,0 +1,1 @@
+replace $ with $mgt in redactor.js
