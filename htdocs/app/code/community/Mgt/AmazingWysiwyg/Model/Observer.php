@@ -55,4 +55,10 @@ class Mgt_AmazingWysiwyg_Model_Observer
             $contentElement->setClass(Mgt_AmazingWysiwyg_Model_Wysiwyg::CSS_CLASS);
         }
     }
+    
+    public function setMergeJsConfigValue(Varien_Event_Observer $observer)
+    {
+        // disable js merge in backend to prevent conflict with jquery
+        Mage::app()->getStore()->setConfig('dev/js/merge_files', 0);
+    }
 }

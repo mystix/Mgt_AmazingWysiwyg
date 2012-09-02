@@ -29,6 +29,16 @@
                 <class>Mgt_AmazingWysiwyg_Helper</class>
             </mgt_amazing_wysiwyg>
         </helpers>
+        <events>
+            <adminhtml_controller_action_predispatch_start>>
+                <observers>
+                    <mgt_amazing_wysiwyg_set_merge_js_config_value>
+                        <class>mgt_amazing_wysiwyg/observer</class>
+                        <method>setMergeJsConfigValue</method>
+                    </mgt_amazing_wysiwyg_set_merge_js_config_value>
+                </observers>
+            </adminhtml_controller_action_predispatch_start>
+        </events>
     </global>
     <adminhtml>
         <events>
