@@ -1219,246 +1219,245 @@ Redactor.prototype = {
 	},
 
 	// PARAGRAPHY
-	paragraphy: function (str)
-	{
-		str = $mgt.trim(str);
-		if (str === '')
-		{
-			if (!$mgt.browser.mozilla)
-			{
-				return this.opts.allEmptyHtml;
-			}
-			else
-			{
-				return this.opts.mozillaEmptyHtml;
-			}
-		}
-		
-		// convert div to p
-		if (this.opts.convertDivs)
-		{
-			str = str.replace(/<div(.*?)>([\w\W]*?)<\/div>/gi, '<p>$mgt2</p>');
-		}
-		
-		// inner functions
-		var X = function(x, a, b) { return x.replace(new RegExp(a, 'g'), b); };
-		var R = function(a, b) { return X(str, a, b); };
+    paragraphy: function (str)
+    {
+        str = $mgt.trim(str);
+        if (str === '')
+        {
+            if (!$.browser.mozilla)
+            {
+                return this.opts.allEmptyHtml;
+            }
+            else
+            {
+                return this.opts.mozillaEmptyHtml;
+            }
+        }
+        
+        // convert div to p
+        if (this.opts.convertDivs)
+        {
+            str = str.replace(/<div(.*?)>([\w\W]*?)<\/div>/gi, '<p>$2</p>');
+        }
+        
+        // inner functions
+        var X = function(x, a, b) { return x.replace(new RegExp(a, 'g'), b); };
+        var R = function(a, b) { return X(str, a, b); };
 
-		// block elements
-		var blocks = '(table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|style|script|object|input|param|p|h[1-6])';
-	
-		//str = '<p>' + str;		
-		str += '\n';
+        // block elements
+        var blocks = '(table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|math|style|script|object|input|param|p|h[1-6])';
+    
+        //str = '<p>' + str;        
+        str += '\n';
 
-		R('<br />\\s*<br />', '\n\n');
-		R('(<' + blocks + '[^>]*>)', '\n$mgt1');
-		R('(</' + blocks + '>)', '$mgt1\n\n');
-		R('\r\n|\r', '\n'); // newlines
-		R('\n\n+', '\n\n'); // remove duplicates
-		R('\n?((.|\n)+?)$mgt', '<p>$mgt1</p>\n'); // including one at the end
-		R('<p>\\s*?</p>', ''); // remove empty p
-		R('<p>(<div[^>]*>\\s*)', '$mgt1<p>');
-		R('<p>([^<]+)\\s*?(</(div|address|form)[^>]*>)', '<p>$mgt1</p>$mgt2');
-		R('<p>\\s*(</?' + blocks + '[^>]*>)\\s*</p>', '$mgt1');
-		R('<p>(<li.+?)</p>', '$mgt1');
-		R('<p>\\s*(</?' + blocks + '[^>]*>)', '$mgt1');
-		R('(</?' + blocks + '[^>]*>)\\s*</p>', '$mgt1');
-		R('(</?' + blocks + '[^>]*>)\\s*<br />', '$mgt1');
-		R('<br />(\\s*</?(p|li|div|dl|dd|dt|th|pre|td|ul|ol)[^>]*>)', '$mgt1');
+        R('<br />\\s*<br />', '\n\n');
+        R('(<' + blocks + '[^>]*>)', '\n$1');
+        R('(</' + blocks + '>)', '$1\n\n');
+        R('\r\n|\r', '\n'); // newlines
+        R('\n\n+', '\n\n'); // remove duplicates
+        R('\n?((.|\n)+?)$', '<p>$1</p>\n'); // including one at the end
+        R('<p>\\s*?</p>', ''); // remove empty p
+        R('<p>(<div[^>]*>\\s*)', '$1<p>');
+        R('<p>([^<]+)\\s*?(</(div|address|form)[^>]*>)', '<p>$1</p>$2');
+        R('<p>\\s*(</?' + blocks + '[^>]*>)\\s*</p>', '$1');
+        R('<p>(<li.+?)</p>', '$1');
+        R('<p>\\s*(</?' + blocks + '[^>]*>)', '$1');
+        R('(</?' + blocks + '[^>]*>)\\s*</p>', '$1');
+        R('(</?' + blocks + '[^>]*>)\\s*<br />', '$1');
+        R('<br />(\\s*</?(p|li|div|dl|dd|dt|th|pre|td|ul|ol)[^>]*>)', '$1');
 
-		// pre
-		if (str.indexOf('<pre') != -1)
-		{
-			R('(<pre(.|\n)*?>)((.|\n)*?)</pre>', function(m0, m1, m2, m3)
-			{
-				return X(m1, '\\\\([\'\"\\\\])', '$mgt1') + X(X(X(m3, '<p>', '\n'), '</p>|<br />', ''), '\\\\([\'\"\\\\])', '$mgt1') + '</pre>';
-			});
-		}
+        // pre
+        if (str.indexOf('<pre') != -1)
+        {
+            R('(<pre(.|\n)*?>)((.|\n)*?)</pre>', function(m0, m1, m2, m3)
+            {
+                return X(m1, '\\\\([\'\"\\\\])', '$1') + X(X(X(m3, '<p>', '\n'), '</p>|<br />', ''), '\\\\([\'\"\\\\])', '$1') + '</pre>';
+            });
+        }
 
-		return R('\n</p>$mgt', '</p>');
-	},
-	
-	// REMOVE TAGS
-	stripTags: function(html) 
-	{
-		var allowed = this.opts.allowedTags;
-		var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
-		return html.replace(tags, function ($mgt0, $mgt1) 
-		{
-			return $mgt.inArray($mgt1.toLowerCase(), allowed) > '-1' ? $mgt0 : '';
-		});
-	},
+        return R('\n</p>$', '</p>');
+    },
 
-	
-	// PASTE CLEANUP
-	pasteCleanUp: function(html)
-	{	
-		// remove comments and php tags		
-		html = html.replace(/<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi, '');
-	
-		// remove nbsp
-		html = html.replace(/(&nbsp;){1,}/gi, '&nbsp;');					
-	
-		// remove google docs marker
-		html = html.replace(/<b\sid="internal-source-marker(.*?)">([\w\W]*?)<\/b>/gi, "$mgt2");		
-	
-		// strip tags
-		html = this.stripTags(html);
-			
-		// prevert
-		html = html.replace(/<td><br><\/td>/gi, '[td]');
-		html = html.replace(/<a(.*?)>([\w\W]*?)<\/a>/gi, '[a$mgt1]$mgt2[/a]');
-		html = html.replace(/<iframe(.*?)>([\w\W]*?)<\/iframe>/gi, '[iframe$mgt1]$mgt2[/iframe]');
-		html = html.replace(/<video(.*?)>([\w\W]*?)<\/video>/gi, '[video$mgt1]$mgt2[/video]');
-		html = html.replace(/<audio(.*?)>([\w\W]*?)<\/audio>/gi, '[audio$mgt1]$mgt2[/audio]');
-		html = html.replace(/<object(.*?)>([\w\W]*?)<\/object>/gi, '[object$mgt1]$mgt2[/object]');
-		html = html.replace(/<img(.*?)>/gi, '[img$mgt1]');
-	
-		// remove attributes
-		html = html.replace(/<(\w+)([\w\W]*?)>/gi, '<$mgt1>');
-		
-		// remove empty
-		html = html.replace(/<[^\/>][^>]*>(\s*|\t*|\n*|&nbsp;|<br>)<\/[^>]+>/gi, '');
-		html = html.replace(/<[^\/>][^>]*>(\s*|\t*|\n*|&nbsp;|<br>)<\/[^>]+>/gi, '');
-		
-		// revert
-		html = html.replace(/\[td\]/gi, '<td><br></td>');
-		html = html.replace(/\[a(.*?)\]([\w\W]*?)\[\/a\]/gi, '<a$mgt1>$mgt2</a>');
-		html = html.replace(/\[iframe(.*?)\]([\w\W]*?)\[\/iframe\]/gi, '<iframe$mgt1>$mgt2</iframe>');
-		html = html.replace(/\[video(.*?)\]([\w\W]*?)\[\/video\]/gi, '<video$mgt1>$mgt2[/video>');
-		html = html.replace(/\[audio(.*?)\]([\w\W]*?)\[\/audio\]/gi, '<audio$mgt1>$mgt2[/audio>');
-		html = html.replace(/\[object(.*?)\]([\w\W]*?)\[\/object\]/gi, '<object$mgt1>$mgt2</object>');
-		html = html.replace(/\[img(.*?)\]/gi, '<img$mgt1>');				
-	
-		// convert div to p
-		if (this.opts.convertDivs)
-		{
-			html = html.replace(/<div(.*?)>([\w\W]*?)<\/div>/gi, '<p>$mgt2</p>');	
-		}
-		
-		// remove span
-		html = html.replace(/<span>([\w\W]*?)<\/span>/gi, '$mgt1');
-		
-		html = html.replace(/\n{3,}/gi, '\n');
-	
-		// remove dirty p
-		html = html.replace(/<p><p>/g, '<p>');
-		html = html.replace(/<\/p><\/p>/g, '</p>');	
-	
-		this.execCommand('inserthtml', html);	
-		
-		if (this.opts.autoresize === true)
-		{
-			$mgt(document.body).scrollTop(this.saveScroll);
-		}
-		else
-		{
-			this.$mgteditor.scrollTop(this.saveScroll);
-		}
-		
-	},	
-	
-		
-	// TEXTAREA CODE FORMATTING
-	formattingRemove: function(html)
-	{
-		// save pre
-		var prebuffer = [];
-		var pre = html.match(/<pre(.*?)>([\w\W]*?)<\/pre>/gi);
-		if (pre !== null)
-		{
-			$mgt.each(pre, function(i,s)
-			{
-				html = html.replace(s, 'prebuffer_' + i);
-				prebuffer.push(s);
-			});
-		}
-	
-		html = html.replace(/\s{2,}/g, ' ');
-		html = html.replace(/\n/g, ' ');	
-		html = html.replace(/[\t]*/g, '');
-		html = html.replace(/\n\s*\n/g, "\n");
-		html = html.replace(/^[\s\n]*/g, '');
-		html = html.replace(/[\s\n]*$mgt/g, '');	
-		html = html.replace(/>\s+</g, '><');
-		
-		if (prebuffer)
-		{
-			$mgt.each(prebuffer, function(i,s)
-			{
-				html = html.replace('prebuffer_' + i, s);
-			});		
-		
-			prebuffer = [];
-		}
-		
-		return html;		
-	},
-	formattingIndenting: function(html)
-	{
-		html = html.replace(/<li/g, "\t<li");
-		html = html.replace(/<tr/g, "\t<tr");
-		html = html.replace(/<td/g, "\t\t<td");
-		html = html.replace(/<\/tr>/g, "\t</tr>");	
-		
-		return html;	
-	},
-	formattingEmptyTags: function(html)		
-	{
-		var etags = ["<pre></pre>","<blockquote>\\s*</blockquote>","<em>\\s*</em>","<ul></ul>","<ol></ol>","<li></li>","<table></table>","<tr></tr>","<span>\\s*<span>", "<span>&nbsp;<span>", "<b>\\s*</b>", "<b>&nbsp;</b>", "<p>\\s*</p>", "<p>&nbsp;</p>",  "<p>\\s*<br>\\s*</p>", "<div>\\s*</div>", "<div>\\s*<br>\\s*</div>"];
-		for (var i = 0; i < etags.length; ++i)
-		{
-			var bbb = etags[i];
-			html = html.replace(new RegExp(bbb,'gi'), "");
-		}
-		
-		return html;
-	},
-	formattingAddBefore: function(html)
-	{
-		var lb = '\r\n';
-		var btags = ["<p", "<form","</ul>", '</ol>', "<fieldset","<legend","<object","<embed","<select","<option","<input","<textarea","<pre","<blockquote","<ul","<ol","<li","<dl","<dt","<dd","<table", "<thead","<tbody","<caption","</caption>","<th","<tr","<td","<figure"];
-		for (var i = 0; i < btags.length; ++i)
-		{
-			var eee = btags[i];
-			html = html.replace(new RegExp(eee,'gi'),lb+eee);
-		}
-		
-		return html;
-	},
-	formattingAddAfter: function(html)
-	{
-		var lb = '\r\n';		
-		var atags = ['</p>', '</div>', '</h1>', '</h2>', '</h3>', '</h4>', '</h5>', '</h6>', '<br>', '<br />', '</dl>', '</dt>', '</dd>', '</form>', '</blockquote>', '</pre>', '</legend>', '</fieldset>', '</object>', '</embed>', '</textarea>', '</select>', '</option>', '</table>', '</thead>', '</tbody>', '</tr>', '</td>', '</th>', '</figure>'];
-		for (var i = 0; i < atags.length; ++i)
-		{
-			var aaa = atags[i];
-			html = html.replace(new RegExp(aaa,'gi'),aaa+lb);
-		}
-		
-		return html;
-	},	
-	formatting: function(html)
-	{
-		html = this.formattingRemove(html);
-	
-		// empty tags
-		html = this.formattingEmptyTags(html);
-					
-		// add formatting before
-		html = this.formattingAddBefore(html);
-		
-		// add formatting after
-		html = this.formattingAddAfter(html);
+    // REMOVE TAGS
+    stripTags: function(html) 
+    {
+        var allowed = this.opts.allowedTags;
+        var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+        return html.replace(tags, function ($0, $1) 
+        {
+            return $.inArray($1.toLowerCase(), allowed) > '-1' ? $0 : '';
+        });
+    },
 
-		// indenting
-		html = this.formattingIndenting(html);	
-	
-		return html;	
-	},
-	
-	// TOGGLE
-	toggle: function()
+    
+    // PASTE CLEANUP
+    pasteCleanUp: function(html)
+    {    
+        // remove comments and php tags        
+        html = html.replace(/<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi, '');
+    
+        // remove nbsp
+        html = html.replace(/(&nbsp;){1,}/gi, '&nbsp;');                    
+    
+        // remove google docs marker
+        html = html.replace(/<b\sid="internal-source-marker(.*?)">([\w\W]*?)<\/b>/gi, "$2");        
+    
+        // strip tags
+        html = this.stripTags(html);
+            
+        // prevert
+        html = html.replace(/<td><br><\/td>/gi, '[td]');
+        html = html.replace(/<a(.*?)>([\w\W]*?)<\/a>/gi, '[a$1]$2[/a]');
+        html = html.replace(/<iframe(.*?)>([\w\W]*?)<\/iframe>/gi, '[iframe$1]$2[/iframe]');
+        html = html.replace(/<video(.*?)>([\w\W]*?)<\/video>/gi, '[video$1]$2[/video]');
+        html = html.replace(/<audio(.*?)>([\w\W]*?)<\/audio>/gi, '[audio$1]$2[/audio]');
+        html = html.replace(/<object(.*?)>([\w\W]*?)<\/object>/gi, '[object$1]$2[/object]');
+        html = html.replace(/<img(.*?)>/gi, '[img$1]');
+    
+        // remove attributes
+        html = html.replace(/<(\w+)([\w\W]*?)>/gi, '<$1>');
+        
+        // remove empty
+        html = html.replace(/<[^\/>][^>]*>(\s*|\t*|\n*|&nbsp;|<br>)<\/[^>]+>/gi, '');
+        html = html.replace(/<[^\/>][^>]*>(\s*|\t*|\n*|&nbsp;|<br>)<\/[^>]+>/gi, '');
+        
+        // revert
+        html = html.replace(/\[td\]/gi, '<td><br></td>');
+        html = html.replace(/\[a(.*?)\]([\w\W]*?)\[\/a\]/gi, '<a$1>$2</a>');
+        html = html.replace(/\[iframe(.*?)\]([\w\W]*?)\[\/iframe\]/gi, '<iframe$1>$2</iframe>');
+        html = html.replace(/\[video(.*?)\]([\w\W]*?)\[\/video\]/gi, '<video$1>$2[/video>');
+        html = html.replace(/\[audio(.*?)\]([\w\W]*?)\[\/audio\]/gi, '<audio$1>$2[/audio>');
+        html = html.replace(/\[object(.*?)\]([\w\W]*?)\[\/object\]/gi, '<object$1>$2</object>');
+        html = html.replace(/\[img(.*?)\]/gi, '<img$1>');                
+    
+        // convert div to p
+        if (this.opts.convertDivs)
+        {
+            html = html.replace(/<div(.*?)>([\w\W]*?)<\/div>/gi, '<p>$2</p>');    
+        }
+        
+        // remove span
+        html = html.replace(/<span>([\w\W]*?)<\/span>/gi, '$1');
+        
+        html = html.replace(/\n{3,}/gi, '\n');
+    
+        // remove dirty p
+        html = html.replace(/<p><p>/g, '<p>');
+        html = html.replace(/<\/p><\/p>/g, '</p>');    
+    
+        this.execCommand('inserthtml', html);    
+        
+        if (this.opts.autoresize === true)
+        {
+            $(document.body).scrollTop(this.saveScroll);
+        }
+        else
+        {
+            this.$editor.scrollTop(this.saveScroll);
+        }
+        
+    },    
+    
+        
+    // TEXTAREA CODE FORMATTING
+    formattingRemove: function(html)
+    {
+        // save pre
+        var prebuffer = [];
+        var pre = html.match(/<pre(.*?)>([\w\W]*?)<\/pre>/gi);
+        if (pre !== null)
+        {
+            $.each(pre, function(i,s)
+            {
+                html = html.replace(s, 'prebuffer_' + i);
+                prebuffer.push(s);
+            });
+        }
+    
+        html = html.replace(/\s{2,}/g, ' ');
+        html = html.replace(/\n/g, ' ');    
+        html = html.replace(/[\t]*/g, '');
+        html = html.replace(/\n\s*\n/g, "\n");
+        html = html.replace(/^[\s\n]*/g, '');
+        html = html.replace(/[\s\n]*$/g, '');    
+        html = html.replace(/>\s+</g, '><');
+        
+        if (prebuffer)
+        {
+            $mgt.each(prebuffer, function(i,s)
+            {
+                html = html.replace('prebuffer_' + i, s);
+            });        
+        
+            prebuffer = [];
+        }
+        
+        return html;        
+    },
+    formattingIndenting: function(html)
+    {
+        html = html.replace(/<li/g, "\t<li");
+        html = html.replace(/<tr/g, "\t<tr");
+        html = html.replace(/<td/g, "\t\t<td");
+        html = html.replace(/<\/tr>/g, "\t</tr>");    
+        
+        return html;    
+    },
+    formattingEmptyTags: function(html)        
+    {
+        var etags = ["<pre></pre>","<blockquote>\\s*</blockquote>","<em>\\s*</em>","<ul></ul>","<ol></ol>","<li></li>","<table></table>","<tr></tr>","<span>\\s*<span>", "<span>&nbsp;<span>", "<b>\\s*</b>", "<b>&nbsp;</b>", "<p>\\s*</p>", "<p>&nbsp;</p>",  "<p>\\s*<br>\\s*</p>", "<div>\\s*</div>", "<div>\\s*<br>\\s*</div>"];
+        for (var i = 0; i < etags.length; ++i)
+        {
+            var bbb = etags[i];
+            html = html.replace(new RegExp(bbb,'gi'), "");
+        }
+        
+        return html;
+    },
+    formattingAddBefore: function(html)
+    {
+        var lb = '\r\n';
+        var btags = ["<p", "<form","</ul>", '</ol>', "<fieldset","<legend","<object","<embed","<select","<option","<input","<textarea","<pre","<blockquote","<ul","<ol","<li","<dl","<dt","<dd","<table", "<thead","<tbody","<caption","</caption>","<th","<tr","<td","<figure"];
+        for (var i = 0; i < btags.length; ++i)
+        {
+            var eee = btags[i];
+            html = html.replace(new RegExp(eee,'gi'),lb+eee);
+        }
+        
+        return html;
+    },
+    formattingAddAfter: function(html)
+    {
+        var lb = '\r\n';        
+        var atags = ['</p>', '</div>', '</h1>', '</h2>', '</h3>', '</h4>', '</h5>', '</h6>', '<br>', '<br />', '</dl>', '</dt>', '</dd>', '</form>', '</blockquote>', '</pre>', '</legend>', '</fieldset>', '</object>', '</embed>', '</textarea>', '</select>', '</option>', '</table>', '</thead>', '</tbody>', '</tr>', '</td>', '</th>', '</figure>'];
+        for (var i = 0; i < atags.length; ++i)
+        {
+            var aaa = atags[i];
+            html = html.replace(new RegExp(aaa,'gi'),aaa+lb);
+        }
+        
+        return html;
+    },    
+    formatting: function(html)
+    {
+        html = this.formattingRemove(html);
+    
+        // empty tags
+        html = this.formattingEmptyTags(html);
+                    
+        // add formatting before
+        html = this.formattingAddBefore(html);
+        
+        // add formatting after
+        html = this.formattingAddAfter(html);
+
+        // indenting
+        html = this.formattingIndenting(html);    
+    
+        return html;    
+    },
+    
+    toggle: function()
 	{
 		var html;
 	
@@ -1503,7 +1502,7 @@ Redactor.prototype = {
 			this.observeImages();
 			this.observeTables();
 		}
-	},	
+	},
 
 	// AUTOSAVE
 	autoSave: function()
@@ -3229,48 +3228,49 @@ $mgt.fn.execCommand = function(cmd, param)
 })(jQuery);
 
 
-// Define: Linkify plugin from stackoverflow
-(function($mgt){
+//Define: Linkify plugin from stackoverflow
+(function($){
 
-	"use strict";
+    "use strict";
 
-	var url1 = /(^|&lt;|\s)(www\..+?\..+?)(\s|&gt;|$mgt)/g,
-	url2 = /(^|&lt;|\s)(((https?|ftp):\/\/|mailto:).+?)(\s|&gt;|$mgt)/g,
+    var url1 = /(^|&lt;|\s)(www\..+?\..+?)(\s|&gt;|$)/g,
+    url2 = /(^|&lt;|\s)(((https?|ftp):\/\/|mailto:).+?)(\s|&gt;|$)/g,
 
-		linkifyThis = function () 
-		{
-			var childNodes = this.childNodes,
-			i = childNodes.length;
-			while(i--)
-			{
-				var n = childNodes[i];
-				if (n.nodeType === 3) 
-				{
-					var html = n.nodeValue;
-					if (html)
-					{
-						html = html.replace(/&/g, '&amp;')
-									.replace(/</g, '&lt;')
-									.replace(/>/g, '&gt;')
-									.replace(url1, '$mgt1<a href="http://$mgt2">$mgt2</a>$mgt3')
-									.replace(url2, '$mgt1<a href="$mgt2">$mgt2</a>$mgt5');
+        linkifyThis = function () 
+        {
+            var childNodes = this.childNodes,
+            i = childNodes.length;
+            while(i--)
+            {
+                var n = childNodes[i];
+                if (n.nodeType === 3) 
+                {
+                    var html = n.nodeValue;
+                    if (html)
+                    {
+                        html = html.replace(/&/g, '&amp;')
+                                    .replace(/</g, '&lt;')
+                                    .replace(/>/g, '&gt;')
+                                    .replace(url1, '$1<a href="http://$2">$2</a>$3')
+                                    .replace(url2, '$1<a href="$2">$2</a>$5');
 
-						$mgt(n).after(html).remove();
-					}
-				}
-				else if (n.nodeType === 1  &&  !/^(a|button|textarea)$mgt/i.test(n.tagName))
-				{
-					linkifyThis.call(n);
-				}
-			}
-		};
-	
-	$mgt.fn.linkify = function ()
-	{
-		this.each(linkifyThis);
-	};
+                        $(n).after(html).remove();
+                    }
+                }
+                else if (n.nodeType === 1  &&  !/^(a|button|textarea)$/i.test(n.tagName))
+                {
+                    linkifyThis.call(n);
+                }
+            }
+        };
+    
+    $.fn.linkify = function ()
+    {
+        this.each(linkifyThis);
+    };
 
 })(jQuery);
+
 
 
 

@@ -23,5 +23,8 @@
 
 class Mgt_AmazingWysiwyg_Helper_Data extends Mgt_Base_Helper_Data
 {
-
+    static public function isEnabled()
+    {
+        return Mage::getModel('mgt_amazing_wysiwyg/wysiwyg')->isEnabled();
+    }
 }

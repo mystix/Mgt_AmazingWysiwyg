@@ -27,22 +27,17 @@ class Mgt_AmazingWysiwyg_Adminhtml_MgtamazingwysiwygController extends Mage_Admi
     {
         $request = new Varien_Object($this->getRequest()->getParams());
         if ($request && $request->getKey()) {
-           //$storage = Mage::getModel('cms/wysiwyg_images_storage');
-            //$storage->getSession()->setCurrentPath(Mage::helper('cms/wysiwyg_images')->getCurrentPath());
-            
+
             $uploader = new Mage_Core_Model_File_Uploader('file');
-            /*
-            if ($allowed = $this->getAllowedExtensions($type)) {
-            	$uploader->setAllowedExtensions($allowed);
-            }
-            */
+            $allowed = Mage::getSingleton('cms/wysiwyg_images_storage')->getAllowedExtensions('image');
+            $uploader->setAllowedExtensions($allowed);
+           
             $uploader->setAllowRenameFiles(true);
             $uploader->setFilesDispersion(false);
             $result = $uploader->save(Mage::helper('cms/wysiwyg_images')->getCurrentPath());
             
-            $helper = Mage::helper('cms/wysiwyg_images');
-            $imageUrl = $helper->getImageHtmlDeclaration($result['file']);
-            
+            $imageUrl = sprintf('/media/%s/%s', Mage_Cms_Model_Wysiwyg_Config::IMAGE_DIRECTORY, $result['file']);
+
             $array = array(
               'filelink' => $imageUrl,
               'filename' => $_FILES['file']['name']
@@ -50,10 +45,6 @@ class Mgt_AmazingWysiwyg_Adminhtml_MgtamazingwysiwygController extends Mage_Admi
             
             echo stripslashes(json_encode($array));
             exit;
-            $muha = 1;
-            
         }
-        echo 'muha';
-        exit;
     }
 }

@@ -21,23 +21,18 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-class Mgt_AmazingWysiwyg_Block_Adminhtml_Catalog_Helper_Form_Wysiwyg extends Mage_Adminhtml_Block_Catalog_Helper_Form_Wysiwyg
+class Mgt_AmazingWysiwyg_Model_Wysiwyg extends Mgt_Base_Helper_Data
 {
-    public function getElementHtml()
+    const XML_PATH_MGT_AMAZING_WYSIWYG_ACTIVE = 'default/mgt_amazing_wysiwyg/mgt_amazing_wysiwyg/active';
+    
+    static public function isEnabled()
     {
-        if ($this->getIsWysiwygEnabled() && Mage::helper('mgt_amazing_wysiwyg')->isEnabled()) {
-            $class = $this->getClass();
-            $this->setClass($class. ' amazing-wysiwyg');
-        }
-        return parent::getElementHtml();
+        $isEnabled = (int)self::_getConfigurationValue(self::XML_PATH_MGT_AMAZING_WYSIWYG_ACTIVE);
+        return $isEnabled;
     }
     
-    public function getAfterElementHtml()
+    static protected function _getConfigurationValue($path)
     {
-        if (!Mage::helper('mgt_amazing_wysiwyg')->isEnabled()) {
-            return parent::getAfterElementHtml();
-        }
-        $html = $this->getData('after_element_html');
-        return $html;
+        return Mage::getConfig()->getNode($path);
     }
 }

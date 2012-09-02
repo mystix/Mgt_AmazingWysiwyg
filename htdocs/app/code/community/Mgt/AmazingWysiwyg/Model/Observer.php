@@ -33,4 +33,15 @@ class Mgt_AmazingWysiwyg_Model_Observer
             $transport->setHtml($transportHtml);
         }
     }
+    
+    
+    public function addCssClass(Varien_Event_Observer $observer)
+    {
+        $form = $observer->getEvent()->getForm();
+        $isEnabled = Mage::helper('mgt_amazing_wysiwyg')->isEnabled();
+        if ($isEnabled && $form && $form instanceof Varien_Data_Form && ($content = $form->getElement('content'))) {
+            $content->unsConfig();
+            $content->setClass('amazing-wysiwyg');
+        }
+    }
 }
