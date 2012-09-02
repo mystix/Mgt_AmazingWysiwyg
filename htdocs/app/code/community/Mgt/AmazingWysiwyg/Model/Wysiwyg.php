@@ -23,12 +23,35 @@
 
 class Mgt_AmazingWysiwyg_Model_Wysiwyg extends Mgt_Base_Helper_Data
 {
+    const CSS_CLASS = 'amazing-wysiwyg';
     const XML_PATH_MGT_AMAZING_WYSIWYG_ACTIVE = 'default/mgt_amazing_wysiwyg/mgt_amazing_wysiwyg/active';
+    const XML_PATH_MGT_AMAZING_WYSIWYG_PRODUCTS = 'default/mgt_amazing_wysiwyg/mgt_amazing_wysiwyg/enable_wysiwyg_product';
+    const XML_PATH_MGT_AMAZING_WYSIWYG_CMS_PAGE = 'default/mgt_amazing_wysiwyg/mgt_amazing_wysiwyg/enable_wysiwyg_cms_page';
+    const XML_PATH_MGT_AMAZING_WYSIWYG_STATIC_BLOCK = 'default/mgt_amazing_wysiwyg/mgt_amazing_wysiwyg/enable_wysiwyg_static_block';
+    
+    static protected $_isEnabled;
     
     static public function isEnabled()
     {
-        $isEnabled = (int)self::_getConfigurationValue(self::XML_PATH_MGT_AMAZING_WYSIWYG_ACTIVE);
-        return $isEnabled;
+        if (!self::$_isEnabled) {
+            self::$_isEnabled = (int)self::_getConfigurationValue(self::XML_PATH_MGT_AMAZING_WYSIWYG_ACTIVE);
+        }
+        return self::$_isEnabled;
+    }
+    
+    public function isEnabledForProduct()
+    {
+        return (int)self::_getConfigurationValue(self::XML_PATH_MGT_AMAZING_WYSIWYG_PRODUCTS);
+    }
+    
+    public function isEnabledForCmsPage()
+    {
+        return (int)self::_getConfigurationValue(self::XML_PATH_MGT_AMAZING_WYSIWYG_CMS_PAGE);
+    }
+    
+    public function isEnabledForStaticBlock()
+    {
+        return (int)self::_getConfigurationValue(self::XML_PATH_MGT_AMAZING_WYSIWYG_STATIC_BLOCK);
     }
     
     static protected function _getConfigurationValue($path)

@@ -44,10 +44,18 @@
                 <observers>
                     <mgt_amazing_wysiwyg_add_css_class>
                         <class>mgt_amazing_wysiwyg/observer</class>
-                        <method>addCssClass</method>
+                        <method>addCmsPageCssClass</method>
                     </mgt_amazing_wysiwyg_add_css_class>
                 </observers>
             </adminhtml_cms_page_edit_tab_content_prepare_form>
+            <adminhtml_block_html_before>
+                <observers>
+                    <mgt_amazing_wysiwyg_static_block_add_css_class>
+                        <class>mgt_amazing_wysiwyg/observer</class>
+                        <method>addStaticBlockCssClass</method>
+                    </mgt_amazing_wysiwyg_static_block_add_css_class>
+                </observers>
+            </adminhtml_block_html_before>
         </events>
         <acl>
             <resources>

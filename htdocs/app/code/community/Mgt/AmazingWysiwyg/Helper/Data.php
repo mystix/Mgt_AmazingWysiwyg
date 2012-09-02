@@ -27,4 +27,19 @@ class Mgt_AmazingWysiwyg_Helper_Data extends Mgt_Base_Helper_Data
     {
         return Mage::getModel('mgt_amazing_wysiwyg/wysiwyg')->isEnabled();
     }
+    
+    static public function isEnabledForProduct()
+    {
+        return Mage::getModel('mgt_amazing_wysiwyg/wysiwyg')->isEnabledForProduct();
+    }
+    
+    static public function isEnabledForCmsPage()
+    {
+        return Mage::getModel('mgt_amazing_wysiwyg/wysiwyg')->isEnabledForCmsPage();
+    }
+    
+    static public function isEnabledForStaticBlock()
+    {
+        return Mage::getModel('mgt_amazing_wysiwyg/wysiwyg')->isEnabledForStaticBlock();
+    }
 }

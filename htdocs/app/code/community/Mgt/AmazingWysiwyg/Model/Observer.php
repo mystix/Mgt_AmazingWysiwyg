@@ -33,15 +33,26 @@ class Mgt_AmazingWysiwyg_Model_Observer
             $transport->setHtml($transportHtml);
         }
     }
-    
-    
-    public function addCssClass(Varien_Event_Observer $observer)
+
+    public function addCmsPageCssClass(Varien_Event_Observer $observer)
     {
         $form = $observer->getEvent()->getForm();
-        $isEnabled = Mage::helper('mgt_amazing_wysiwyg')->isEnabled();
-        if ($isEnabled && $form && $form instanceof Varien_Data_Form && ($content = $form->getElement('content'))) {
-            $content->unsConfig();
-            $content->setClass('amazing-wysiwyg');
+        $helper = Mage::helper('mgt_amazing_wysiwyg');
+        if ($form && ($form instanceof Varien_Data_Form) && ($contentElement = $form->getElement('content')) && $helper->isEnabled() && $helper->isEnabledForCmsPage()) {
+            $contentElement->unsConfig();
+            $contentElement->setClass(Mgt_AmazingWysiwyg_Model_Wysiwyg::CSS_CLASS);
+        }
+    }
+    
+    public function addStaticBlockCssClass(Varien_Event_Observer $observer)
+    {
+        $block = $observer->getEvent()->getBlock();
+        $helper = Mage::helper('mgt_amazing_wysiwyg');
+        if ($block && ($block instanceof Mage_Adminhtml_Block_Cms_Block_Edit_Form) && $helper->isEnabled() && $helper->isEnabledForStaticBlock()) {
+            $form = $block->getForm();
+            $contentElement = $form->getElement('content');
+            $contentElement->unsConfig();
+            $contentElement->setClass(Mgt_AmazingWysiwyg_Model_Wysiwyg::CSS_CLASS);
         }
     }
 }

@@ -25,16 +25,18 @@ class Mgt_AmazingWysiwyg_Block_Adminhtml_Catalog_Helper_Form_Wysiwyg extends Mag
 {
     public function getElementHtml()
     {
-        if ($this->getIsWysiwygEnabled() && Mage::helper('mgt_amazing_wysiwyg')->isEnabled()) {
+        $helper = Mage::helper('mgt_amazing_wysiwyg');
+        if ($this->getIsWysiwygEnabled() && ($helper->isEnabled() && $helper->isEnabledForProduct())) {
             $class = $this->getClass();
-            $this->setClass($class. ' amazing-wysiwyg');
+            $this->setClass($class.' '.Mgt_AmazingWysiwyg_Model_Wysiwyg::CSS_CLASS);
         }
         return parent::getElementHtml();
     }
     
     public function getAfterElementHtml()
     {
-        if (!Mage::helper('mgt_amazing_wysiwyg')->isEnabled()) {
+        $helper = Mage::helper('mgt_amazing_wysiwyg');
+        if (!$helper->isEnabled() || ($helper->isEnabled() && !$helper->isEnabledForProduct())) {
             return parent::getAfterElementHtml();
         }
         $html = $this->getData('after_element_html');
