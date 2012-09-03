@@ -1,14 +1,21 @@
-### Welcome to the Mgt Serp Editor Extension for Magento 1.4.x - 1.7.x
+### Welcome to the Mgt Amazing WYSIWYG Editor for Magento
 
-SERP is an acronym that can make or break your online marketing campaign. 
-"SERP" is short for "search engine results page," and as marketing through search continually entrenches itself as the dominant medium for online success, it becomes vital that you be able to: 
+WYSIWYG ( /ˈwɪziwɪɡ/ wiz-ee-wig)[1] is an acronym for What You See Is What You Get. 
+The term is used in computing to describe a system in which content (text and graphics) displayed onscreen during editing appears in a 
+form closely corresponding to its appearance when printed or displayed as a finished product,[2] which might be a printed document, web page, or slide presentation.
 
-1. Identify the importance of a SERP - What do you need to know about SERPs, and why?
-2. Act on that knowledge - Knowing what's important and why it's crucial to your business, how do you make that knowledge work for you? Once you know what you should be doing, how do you go out and do it?
+Why should i use this Redactor WYSIWYG Editor for Magento?
 
-Why Do SERPs Matter to Me?
-
-Because ranking your online store in the proper SERP position will be the difference between success and failure in your search marketing campaigns.
+* Beautiful user interface
+* TinyMCE is really "heavy" and slow and generated many html errors
+* Redactor is about 8 times faster than TinyMCE
+* You can upload images via Drag & Drop
+* Retina ready & iOS support
+* Switch between html and plain mode
+* Enable / Disable editor for products
+* Enabled / Disable editor for cms pages
+* Enable / Disable editor for static blocks
+* Super clean on past
 
 ## DEMO
 
@@ -22,8 +29,7 @@ Because ranking your online store in the proper SERP position will be the differ
 
 * copy all files to your magento installation
 * Clear the cache in Admin -> System -> Cache Management 
-* Go to Admin -> System -> Configuration -> MGT-COMMERCE.COM -> Serp Editor -> Settings -> Active -> Yes
-* Edit a product and go to tab "Meta Information" to get an amazing serp preview
+* Go to Admin -> System -> Configuration -> MGT-COMMERCE.COM -> Amazing WYSIWYG Editor -> Settings -> Active -> Yes
 * Have fun and give Feedback
 
 ## CHANGELOG
