@@ -1,8 +1,8 @@
 ### Welcome to the Mgt Amazing WYSIWYG Editor for Magento
 
-WYSIWYG ( /ˈwɪziwɪɡ/ wiz-ee-wig)[1] is an acronym for What You See Is What You Get. 
+WYSIWYG ( /ˈwɪziwɪɡ/ wiz-ee-wig) is an acronym for What You See Is What You Get. 
 The term is used in computing to describe a system in which content (text and graphics) displayed onscreen during editing appears in a 
-form closely corresponding to its appearance when printed or displayed as a finished product,[2] which might be a printed document, web page, or slide presentation.
+form closely corresponding to its appearance when printed or displayed as a finished product, which might be a printed document, web page, or slide presentation.
 
 Why should i use this Redactor WYSIWYG Editor for Magento?
 
@@ -19,7 +19,7 @@ Why should i use this Redactor WYSIWYG Editor for Magento?
 
 ## DEMO
 
-[http://serp-editor.mgt-commerce.com/](http://serp-editor.mgt-commerce.com/)
+[http://redactor-wysiwyg-magento.mgt-commerce.com/](http://redactor-wysiwyg-magento.mgt-commerce.com/)
 
 ## MORE INFORMATION
 
