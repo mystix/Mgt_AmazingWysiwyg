@@ -23,6 +23,11 @@
             <mgt_amazing_wysiwyg>
                 <class>Mgt_AmazingWysiwyg_Model</class>
             </mgt_amazing_wysiwyg>
+            <core>
+               <rewrite>
+                  <store>Mgt_AmazingWysiwyg_Model_Core_Store</store>
+               </rewrite>
+            </core>
         </models>
         <helpers>
             <mgt_amazing_wysiwyg>

@@ -59,6 +59,8 @@ class Mgt_AmazingWysiwyg_Model_Observer
     public function setMergeJsConfigValue(Varien_Event_Observer $observer)
     {
         // disable js merge in backend to prevent conflict with jquery
-        Mage::app()->getStore()->setConfig('dev/js/merge_files', 0);
+        $store = Mage::app()->getStore();
+        $store->setConfigCacheValue('dev/js/merge_files', 0);
+        $store->setConfigCacheValue('dev/css/merge_css_files', 0);
     }
 }
