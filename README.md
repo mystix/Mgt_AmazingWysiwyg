@@ -17,13 +17,9 @@ Why should i use this Redactor WYSIWYG Editor for Magento?
 * Enable / Disable editor for static blocks
 * Super clean on past
 
-## DEMO
-
-[http://redactor-wysiwyg-magento.mgt-commerce.com/](http://redactor-wysiwyg-magento.mgt-commerce.com/)
-
 ## MORE INFORMATION
 
-[http://www.mgt-commerce.com/magento-serp-editor-extension.html](http://www.mgt-commerce.com/magento-serp-editor-extension.html)
+[http://www.mgt-commerce.com/redactor-jquery-wysiwyg-for-magento.html](http://www.mgt-commerce.com/redactor-jquery-wysiwyg-for-magento.html)
 
 ## INSTALLATION
 
