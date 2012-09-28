@@ -1225,7 +1225,7 @@ Redactor.prototype = {
         str = $mgt.trim(str);
         if (str === '')
         {
-            if (!$.browser.mozilla)
+            if (!$mgt.browser.mozilla)
             {
                 return this.opts.allEmptyHtml;
             }
