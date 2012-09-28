@@ -30,6 +30,10 @@ Why should i use this Redactor WYSIWYG Editor for Magento?
 
 ## CHANGELOG
 
+1.0.1
+
+* Fixed bug - editor does not work when creating a new product
+
 1.0.0
 
 * initial release
