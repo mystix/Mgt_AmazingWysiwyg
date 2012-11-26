@@ -1,0 +1,5 @@
+app/code/community/Mgt/AmazingWysiwyg app/code/community/Mgt/AmazingWysiwyg
+app/design/adminhtml/default/default/layout/mgt_amazing_wysiwyg.xml app/design/adminhtml/default/default/layout/mgt_amazing_wysiwyg.xml
+app/design/adminhtml/default/default/template/mgt_amazing_wysiwyg app/design/adminhtml/default/default/template/mgt_amazing_wysiwyg
+app/etc/modules/Mgt_AmazingWysiwyg.xml app/etc/modules/Mgt_AmazingWysiwyg.xml
+skin/adminhtml/default/default/mgt_amazing_wysiwyg skin/adminhtml/default/default/mgt_amazing_wysiwyg
