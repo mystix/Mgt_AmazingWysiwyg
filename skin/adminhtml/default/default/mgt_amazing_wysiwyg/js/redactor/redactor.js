@@ -1570,8 +1570,7 @@ var RLANG = {
             {
                 this.$el.hide();
 
-
-                var html = this.stripTags(this.$el.val());
+                html = this.stripTags(this.$el.val());
                 this.$editor.html(html);
                 this.$editor.show();
 
