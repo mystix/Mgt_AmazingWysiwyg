@@ -3170,6 +3170,10 @@ var RLANG = {
         return this.data('redactor').getCode();
     };
 
+    $.fn.getObject = function() {
+        return this.data('redactor');
+    };
+
     $.fn.getText = function()
     {
         return this.data('redactor').$editor.text();
