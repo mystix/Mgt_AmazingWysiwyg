@@ -1,0 +1,14 @@
+{
+    "name": "mgt/Mgt_AmazingWysiwyg",
+    "type": "magento-module",
+    "description": "With the Redactor WYSIWYG you can work 8 x times faster like the standard TinyMCE editor for Magento. Drag and drop for images, and full retina support only some of the highlights!",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "authors":[
+        {
+            "name":"mgt-commerce",
+            "email":"support@mgt-commerce.com"
+        }
+    ]
+}
